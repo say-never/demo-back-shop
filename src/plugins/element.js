@@ -80,6 +80,6 @@ Vue.use(CheckboxGroup)
 Vue.use(Upload)
 Vue.use(Timeline)
 Vue.use(TimelineItem)
-//Message需要全局挂载到vue上
+//Message需要全局挂载到vue上，这样之后就能通过this访问到
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm
