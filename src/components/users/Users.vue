@@ -1,15 +1,15 @@
 <template>
   <div>
-    <!-- 面包屑导航区域 -->
+    <!-- 面包屑 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>用户管理</el-breadcrumb-item>
       <el-breadcrumb-item>用户列表</el-breadcrumb-item>
     </el-breadcrumb>
 
-    <!-- 卡片视图区域 -->
+    <!-- 卡片视图 -->
     <el-card>
-      <!-- 搜索与添加区域 -->
+      <!-- 搜索与添加 -->
       <el-row :gutter="20">
         <el-col :span="8">
           <el-input
@@ -32,7 +32,7 @@
         </el-col>
       </el-row>
 
-      <!-- 用户列表区域 -->
+      <!-- 用户列表 -->
       <el-table :data="userlist" border stripe>
         <el-table-column type="index"></el-table-column>
         <el-table-column label="姓名" prop="username"></el-table-column>
@@ -82,7 +82,7 @@
         </el-table-column>
       </el-table>
 
-      <!-- 分页区域 -->
+      <!-- 分页 -->
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -238,7 +238,7 @@ export default {
         email: "",
         mobile: "",
       },
-      // 添加表单的验证规则对象
+      // 表单验证规则对象
       addFormRules: {
         username: [
           { required: true, message: "请输入用户名", trigger: "blur" },
@@ -278,7 +278,8 @@ export default {
       editFormRules: {
         email: [
           { required: true, message: "请输入用户邮箱", trigger: "blur" },
-          { validator: checkEmail, trigger: "blur" },
+          // { validator: checkEmail, trigger: "blur" },
+          {type:'email', message:'请输入合法的邮箱',trigger:['blur','change']}
         ],
         mobile: [
           { required: true, message: "请输入用户手机", trigger: "blur" },
