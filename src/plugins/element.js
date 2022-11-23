@@ -39,7 +39,8 @@ import {
     Checkbox,
     Upload,
     Timeline,
-    TimelineItem
+    TimelineItem,
+    Backtop
 } from 'element-ui'
 
 
@@ -82,6 +83,7 @@ Vue.use(CheckboxGroup)
 Vue.use(Upload)
 Vue.use(Timeline)
 Vue.use(TimelineItem)
+Vue.use(Backtop)
 //Message需要全局挂载到vue上，这样之后就能通过this访问到
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm

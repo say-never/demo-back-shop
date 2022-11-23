@@ -83,6 +83,7 @@
 
     <!-- 添加分类的对话框 -->
     <el-dialog
+      v-dialogDrag
       title="添加分类"
       :visible.sync="addCateDialogVisible"
       width="50%"
@@ -120,6 +121,32 @@
     </el-dialog>
 
     <!-- 修改分类对话框 -->
+    <el-dialog
+      v-dialogDrag
+      title="修改分类"
+      :visible.sync="editCateDialogVisbel"
+      width="50%"
+    >
+      <el-form
+        :model="editCate"
+        :rules="editCateRules"
+        ref="editCateRef"
+        label-width="100px"
+      >
+        <el-form-item label="分类名称" prop="cat_name">
+          <el-input v-model="editCate.cat_name"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="editCateDialogVisbel = false">取 消</el-button>
+        <el-button type="primary" @click="editCateInfo">确 定</el-button>
+      </span>
+    </el-dialog>
+
+    <!-- 滑动页面即可看到右下方的按钮，点击返回顶部 -->
+    <el-backtop :visibility-height="30" :bottom="100" :right="100">
+      <div>UP</div>
+    </el-backtop>
   </div>
 </template>
   
@@ -192,6 +219,15 @@ export default {
       },
       // 选中的父级分类的Id数组
       selectedKeys: [],
+      // 编辑对话框的显示和隐藏
+      editCateDialogVisbel: false,
+      editCate: {},
+      editCateRules: {
+        cat_name: [
+          { required: true, message: "请输入要修改的信息", trigger: "blur" },
+        ],
+      },
+      editCateId: "",
     };
   },
   created() {
@@ -208,7 +244,7 @@ export default {
         return this.$message.error("获取商品分类失败！");
       }
 
-      console.log(res.data);
+      // console.log(res.data);
       // 把数据列表，赋值给 catelist
       this.catelist = res.data.result;
       // 为总数据条数赋值
@@ -241,12 +277,12 @@ export default {
         return this.$message.error("获取父级分类数据失败！");
       }
 
-      console.log(res.data);
+      // console.log(res.data);
       this.parentCateList = res.data;
     },
     // 选择项发生变化触发这个函数
     parentCateChanged() {
-      console.log(this.selectedKeys);
+      // console.log(this.selectedKeys);
       // 如果 selectedKeys 数组中的 length 大于0，证明选中的父级分类
       // 反之，就说明没有选中任何父级分类
       if (this.selectedKeys.length > 0) {
@@ -320,15 +356,31 @@ export default {
     },
     // 分类编辑对话框
     async showeditCateDialog(cateInfo) {
-      this.editCateId = cateInfo.cat_id
-      const { data: res } = await this.$http.get('categories/' + cateInfo.cat_id)
+      this.editCateId = cateInfo.cat_id;
+      const { data: res } = await this.$http.get(
+        "categories/" + cateInfo.cat_id
+      );
       if (res.meta.status !== 200) {
         return this.$message.error("查询用户信息失败！");
       }
-      this.editCate = res.data
+      this.editCate = res.data;
       // console.log(this.editCate)
       // console.log(res.data)
-      this.editCateDialogVisbel = true
+      this.editCateDialogVisbel = true;
+    },
+    // 编辑分类信息
+    async editCateInfo() {
+      const { data: res } = await this.$http.put(
+        "categories/" + this.editCate.cat_id,
+        { cat_name: this.editCate.cat_name }
+      );
+      if (res.meta.status !== 200) {
+        return this.$message.error("修改分类数据失败!");
+      }
+      this.$message.success("修改分类数据成功!");
+      this.getCateList();
+      this.editCateDialogVisbel = false;
+      // console.log(res)
     },
     // 监听修改用户对话框的关闭事件
     editDialogClosed() {

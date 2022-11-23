@@ -22,6 +22,10 @@
           </el-table-column>
         </el-table>
       </el-card>
+      <!-- 滑动页面即可看到右下方的按钮，点击返回顶部 -->
+    <el-backtop :visibility-height="30" :bottom="100" :right="100">
+      <div>UP</div>
+    </el-backtop>
     </div>
   </template>
   
@@ -46,7 +50,7 @@
         }
   
         this.rightsList = res.data
-        console.log(this.rightsList)
+        // console.log(this.rightsList)
       }
     }
   }

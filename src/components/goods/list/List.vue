@@ -54,6 +54,7 @@
               type="primary"
               icon="el-icon-edit"
               size="mini"
+              @click="showEditDialog(scope.row.goods_id)"
             ></el-button>
             <el-button
               type="danger"
@@ -65,12 +66,39 @@
         </el-table-column>
       </el-table>
 
+      <!-- 修改角色的对话框 -->
+      <el-dialog
+        v-dialogDrag
+        title="修改商品"
+        :visible.sync="dialogFormVisible"
+        width="50%"
+        @close="editDialogClosed"
+      >
+        <el-form :model="editForm" ref="editFormRef" label-width="70px">
+          <el-form-item label="商品名称">
+            <el-input v-model="editForm.goods_name"></el-input>
+          </el-form-item>
+          <el-form-item label="价格">
+            <el-input v-model="editForm.goods_price"></el-input>
+          </el-form-item>
+          <el-form-item label="重量">
+            <el-input v-model="editForm.goods_weight"></el-input>
+          </el-form-item>
+          <el-form-item label="创建时间">
+            <el-input v-model="editForm.add_time"></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="editListInfo">确 定</el-button>
+        </div>
+      </el-dialog>
       <!-- 分页区域 -->
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="queryInfo.pagenum"
-        :page-sizes="[5, 10, 15, 20]"
+        :page-sizes="[5, 10, 15, 20, 100]"
         :page-size="queryInfo.pagesize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
@@ -78,6 +106,10 @@
       >
       </el-pagination>
     </el-card>
+    <!-- 滑动页面即可看到右下方的按钮，点击返回顶部 -->
+    <el-backtop :visibility-height="30" :bottom="100" :right="100">
+      <div>UP</div>
+    </el-backtop>
   </div>
 </template>
   
@@ -95,6 +127,10 @@ export default {
       goodslist: [],
       // 总数据条数
       total: 0,
+      // 修改商品参数表单中的数据
+      editForm: {},
+      // 控制修改商品参数对话框的显示与隐藏
+      dialogFormVisible: false,
     };
   },
   created() {
@@ -112,7 +148,7 @@ export default {
       }
 
       this.$message.success("获取商品列表成功！");
-      console.log(res.data);
+      // console.log(res.data);
       this.goodslist = res.data.goods;
       this.total = res.data.total;
     },
@@ -150,6 +186,49 @@ export default {
     },
     goAddpage() {
       this.$router.push("/goods/add");
+    },
+    // 展示编辑商品参数对话框
+    async showEditDialog(id) {
+      const { data: res } = await this.$http.get("goods/" + id);
+
+      if (res.meta.status !== 200) {
+        return this.$message.error("查询商品参数信息失败！");
+      }
+
+      this.editForm = res.data;
+      this.dialogFormVisible = true;
+    },
+    // 监听修改商品参数对话框的关闭事件
+    editDialogClosed() {
+      this.$refs.editFormRef.resetFields();
+    },
+    // 修改商品参数信息并提交
+    editListInfo() {
+      this.$refs.editFormRef.validate(async (valid) => {
+        if (!valid) return;
+        // 发起修改商品参数信息的数据请求
+        const { data: res } = await this.$http.put(
+          "goods/" + this.editForm.goods_id,
+          {
+            goods_name: this.editForm.goods_name,
+            goods_price: this.editForm.goods_price,
+            goods_weight: this.editForm.goods_weight,
+            goods_number:this.editForm.goods_number,
+            add_time: this.editForm.add_time,
+          }
+        );
+
+        if (res.meta.status !== 200) {
+          return this.$message.error("更新商品参数信息失败！");
+        }
+
+        // 关闭对话框
+        this.dialogFormVisible = false;
+        // 刷新数据列表
+        this.getGoodsList();
+        // 提示修改成功
+        this.$message.success("更新商品参数信息成功！");
+      });
     },
   },
 };

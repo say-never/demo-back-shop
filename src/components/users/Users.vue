@@ -97,6 +97,7 @@
 
     <!-- 添加用户的对话框 -->
     <el-dialog
+      v-dialogDrag
       title="添加用户"
       :visible.sync="addDialogVisible"
       width="50%"
@@ -131,6 +132,7 @@
 
     <!-- 修改用户的对话框 -->
     <el-dialog
+    v-dialogDrag
       title="修改用户"
       :visible.sync="editDialogVisible"
       width="50%"
@@ -186,6 +188,11 @@
         <el-button type="primary" @click="saveRoleInfo">确 定</el-button>
       </span>
     </el-dialog>
+
+    <!-- 滑动页面即可看到右下方的按钮，点击返回顶部 -->
+    <el-backtop :visibility-height="30" :bottom="100" :right="100">
+      <div>UP</div>
+    </el-backtop>
   </div>
 </template>
   
@@ -314,7 +321,7 @@ export default {
     },
     // 监听 pagesize 改变的事件
     handleSizeChange(newSize) {
-      // console.log(newSize)
+      console.log(newSize)
       this.queryInfo.pagesize = newSize;
       this.getUserList();
     },
@@ -326,7 +333,7 @@ export default {
     },
     // 监听 switch 开关状态的改变
     async userStateChanged(userinfo) {
-    //   console.log(userinfo);
+      console.log(userinfo);
       const { data: res } = await this.$http.put(
         `users/${userinfo.id}/state/${userinfo.mg_state}`
       );
@@ -360,7 +367,7 @@ export default {
     },
     // 展示编辑用户的对话框
     async showEditDialog(id) {
-      // console.log(id)
+      console.log(id)
       const { data: res } = await this.$http.get("users/" + id);
 
       if (res.meta.status !== 200) {

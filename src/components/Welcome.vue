@@ -10,8 +10,9 @@
 
 <style lang="less" scoped>
 h1{
-  color: pink;
+  color: #2b4b6b;
   text-align: center;
   letter-spacing: 0.4em;
+  font-size: 50px;
 }
 </style>

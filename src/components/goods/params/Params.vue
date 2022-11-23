@@ -4,7 +4,7 @@
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>商品管理</el-breadcrumb-item>
-      <el-breadcrumb-item>参数列表</el-breadcrumb-item>
+      <el-breadcrumb-item>分类参数</el-breadcrumb-item>
     </el-breadcrumb>
 
     <!-- 卡片视图区域 -->
@@ -23,7 +23,7 @@
           <span>选择商品分类：</span>
           <!-- 选择商品分类的级联选择框 -->
           <el-cascader
-            expand-trigger="hover"
+            props.expandTrigger="hover"
             :options="catelist"
             :props="cateProps"
             v-model="selectedCateKeys"
@@ -285,7 +285,7 @@ export default {
 
       this.catelist = res.data;
 
-      console.log(this.catelist);
+      // console.log(this.catelist);
     },
     // 级联选择框选中项变化，会触发这个函数
     handleChange() {
@@ -293,7 +293,7 @@ export default {
     },
     // tab 页签点击事件的处理函数
     handleTabClick() {
-      console.log(this.activeName);
+      // console.log(this.activeName);
       this.getParamsData();
     },
     // 获取参数的列表数据
@@ -307,7 +307,7 @@ export default {
       }
 
       // 证明选中的是三级分类
-      console.log(this.selectedCateKeys);
+      // console.log(this.selectedCateKeys);
       // 根据所选分类的Id，和当前所处的面板，获取对应的参数
       const { data: res } = await this.$http.get(
         `categories/${this.cateId}/attributes`,
@@ -328,7 +328,7 @@ export default {
         item.inputValue = "";
       });
 
-      console.log(res.data);
+      // console.log(res.data);
       if (this.activeName === "many") {
         this.manyTableData = res.data;
       } else {

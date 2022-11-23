@@ -2,15 +2,43 @@ const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true,
   lintOnSave: false,
-  devServer: {
-    host: '127.0.0.1',
-    port: 8080,
-    client: {
-      webSocketURL: 'ws://192.168.17.32:8080/ws',
-    },
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-    }
-  },
+  // 配置打包操作
+  chainWebpack: config => {
+    // 发布模式
+    config.when(process.env.NODE_ENV === 'production', config => {
+      config
+        .entry('app')
+        .clear()
+        .add('./src/main-pro.js')
+
+      config.set('externals', {
+        vue: 'Vue',
+        'vue-router': 'VueRouter',
+        axios: 'axios',
+        lodash: '_',
+        echarts: 'echarts',
+        nprogress: 'NProgress',
+        'vue-quill-editor': 'VueQuillEditor'
+      })
+
+      config.plugin('html').tap(args => {
+        args[0].isProd = true
+        return args
+      })
+    })
+
+    // 开发模式
+    config.when(process.env.NODE_ENV === 'development', config => {
+      config
+        .entry('app')
+        .clear()
+        .add('./src/main-dev.js')
+
+      config.plugin('html').tap(args => {
+        args[0].isProd = false
+        return args
+      })
+    })
+  }
 
 })
