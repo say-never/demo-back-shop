@@ -1,15 +1,15 @@
 <template>
   <div>
-    <!-- 面包屑导航区域 -->
+    <!-- 面包屑 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>商品管理</el-breadcrumb-item>
       <el-breadcrumb-item>分类参数</el-breadcrumb-item>
     </el-breadcrumb>
 
-    <!-- 卡片视图区域 -->
+    <!-- 卡片视图 -->
     <el-card>
-      <!-- 警告区域 -->
+      <!-- 警告 -->
       <el-alert
         show-icon
         title="注意：只允许为第三级分类设置相关参数！"
@@ -17,7 +17,7 @@
         :closable="false"
       ></el-alert>
 
-      <!-- 选择商品分类区域 -->
+      <!-- 选择商品分类 -->
       <el-row class="cat_opt">
         <el-col>
           <span>选择商品分类：</span>
@@ -33,7 +33,7 @@
         </el-col>
       </el-row>
 
-      <!-- tab 页签区域 -->
+      <!-- tab 页签 -->
       <el-tabs v-model="activeName" @tab-click="handleTabClick">
         <!-- 添加动态参数的面板 -->
         <el-tab-pane label="动态参数" name="many">

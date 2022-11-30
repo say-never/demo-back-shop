@@ -1,6 +1,6 @@
 <template>
   <el-container class="home-container">
-    <!-- 头部区域 -->
+    <!-- 头部 -->
     <el-header>
       <div>
         <img src="../assets/a.jpg" alt="" />
@@ -8,12 +8,12 @@
       </div>
       <el-button type="info" @click="logout">退出</el-button>
     </el-header>
-    <!-- 页面主体区域 -->
+    <!-- 页面主体 -->
     <el-container>
       <!-- 侧边栏 判断是否折叠-->
       <el-aside :width="isCollapse ? '64px' : '200px'">
         <div class="toggle-button" @click="toggleCollapse">|||</div>
-        <!-- 侧边栏菜单区域 -->
+        <!-- 侧边栏菜单 -->
         <el-menu
           background-color="#333744"
           text-color="#fff"
@@ -33,9 +33,7 @@
           >
             <!-- 一级菜单的模板区域 -->
             <template slot="title">
-              <!-- 图标 -->
               <i :class="iconsObj[item.id]"></i>
-              <!-- 文本 -->
               <span>{{ item.authName }}</span>
             </template>
 
@@ -47,16 +45,14 @@
               @click="saveNavState('/' + subItem.path)"
             >
               <template slot="title">
-                <!-- 图标 -->
                 <i class="el-icon-menu"></i>
-                <!-- 文本 -->
                 <span>{{ subItem.authName }}</span>
               </template>
             </el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>
-      <!-- 右侧内容主体 -->
+      <!-- 右侧内容 -->
       <el-main>
         <!-- 路由占位符 -->
         <router-view></router-view>
@@ -67,6 +63,7 @@
   
   <script>
 export default {
+
   data() {
     return {
       // 左侧菜单数据

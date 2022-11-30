@@ -1,13 +1,13 @@
 <template>
   <div>
-    <!-- 面包屑导航区域 -->
+    <!-- 面包屑 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>订单管理</el-breadcrumb-item>
       <el-breadcrumb-item>订单列表</el-breadcrumb-item>
     </el-breadcrumb>
 
-    <!-- 卡片视图区域 -->
+    <!-- 卡片视图 -->
     <el-card>
       <el-row>
         <el-col :span="8">
@@ -60,7 +60,7 @@
         </el-table-column>
       </el-table>
 
-      <!-- 分页区域 -->
+      <!-- 分页 -->
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"

@@ -1,15 +1,15 @@
 <template>
   <div>
-    <!-- 面包屑导航区域 -->
+    <!-- 面包屑 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>商品管理</el-breadcrumb-item>
       <el-breadcrumb-item>商品列表</el-breadcrumb-item>
     </el-breadcrumb>
 
-    <!-- 卡片视图 -->
+    <!-- 卡片 -->
     <el-card>
-      <!-- 提示区域 -->
+      <!-- 提示 -->
       <el-alert
         title="添加商品信息"
         type="info"
@@ -18,7 +18,7 @@
         :closable="false"
       >
       </el-alert>
-      <!-- 步骤条区域 -->
+      <!-- 步骤条 -->
       <el-steps
         :space="200"
         :active="activeIndex - 0"
@@ -33,7 +33,7 @@
         <el-step title="完成"></el-step>
       </el-steps>
 
-      <!-- tab栏区域 -->
+      <!-- tab栏 -->
       <el-form
         :model="addForm"
         :rules="addFormRules"

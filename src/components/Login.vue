@@ -1,11 +1,11 @@
 <template>
   <div class="login_contaier">
     <div class="login_box">
-      <!--头像区域-->
+      <!--头像-->
       <div class="avatar_box">
         <img src="../assets/logo.png" alt="" />
       </div>
-      <!--表单提交区域-->
+      <!--表单提交-->
       <el-form
         :rules="loginFormRules"
         ref="loginFormRef"
